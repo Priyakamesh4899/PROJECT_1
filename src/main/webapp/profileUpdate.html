@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8">
+        <title>EMPLOYEE HOMEPAGE</title>
+    </head>
+<body>
+
+    <header>
+        <div class="head">
+            <i class="fa-solid fa-house"></i>
+            <a class="nav-link" href="#" >
+                <img src="logo.png" width="35px" height="40px">
+                </a>
+             <nav>
+                 <ul>
+                    <li><a href="employeePage.html">HOME</a></li>
+                     <li><a href="employeeProfile.html">PROFILE</a></li>
+                     <li><a href="embrusementRequest.html">EMBRUSEMENT REQUEST</a></li>
+                     <li><a href="logout.html">LOGOUT</a></li>
+                 </ul>
+             </nav>
+        </div>
+        </header>
+        <center>
+        <div>
+        <br>
+        <br>
+        <br>
+        <form>
+        <center><img src="update.png" alter="profile image" width="35%" style="border: 5px solid #009999;padding-top:0px"></center>
+        <table style="width:35%;height:100%;border: 5px solid #009999;padding-top:0px" >
+        <thead>
+        <tr >
+         <th colspan="2" style="background-color:#ff3399;color: #00e6e6;height:80px ;border:4px solid #00e6e6"><h2>UPDATE YOUR PROFILE</h2></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>LAST NAME:</td>
+        <td><input type="text" name="lastname" placeholder="update your lastname" id="ln" size="25px" style="height:27px;font-size:14pt;"></td>
+        </tr>
+        <tr>
+        <td>EMAIL ID:</td>
+        <td><input type="email" name="emailid" placeholder="update your email id" id="em" size="25px" style="height:27px;font-size:14pt;"></td>
+        </tr>
+        <tr>
+        <td>DOOR NO:</td>
+        <td><input type="text" name="door-no" placeholder="update your door no" id="dn" size="25px" style="height:27px;font-size:14pt;"></td>
+        </tr>
+        <tr>
+        <td>STREET:</td>
+        <td><input type="text" name="street" placeholder="update your street" id="str" size="25px" style="height:27px;font-size:14pt;"></td>
+        </tr>
+        <tr>
+        <td>DISTRICT:</td>
+        <td><input type="text" name="district" placeholder="update your district" id="dst" size="25px" style="height:27px;font-size:14pt;"></td>
+        </tr>
+        <tr>
+        <td>PINCODE:</td>
+        <td><input type="number" name="pincode" placeholder="update your pincode" id="pin" size="25px" style="height:27px;font-size:14pt;"></td>
+        </tr>
+        <tr>
+        <td>CONTACT NO:</td>
+        <td><input type="number" name="contact-no" placeholder="update your contact no" id="phn" size="25px" style="height:27px;font-size:14pt;"></td>
+        </tr>
+        <tr>
+        <td></td>
+        <td><button type="button" name="update" class="but" onclick="updateProfile()">UPDATE</td>
+        </tr>
+        </tbody>
+        
+        </table>
+
+        </form>
+        </div>
+    </center>
+	<div id="update">	
+    </div>
+  <script>  
+    function updateProfile(){
+	 var lname=document.getElementById('ln').value;
+	 var email=document.getElementById('em').value;
+	 var door=document.getElementById('dn').value;
+	 var st=document.getElementById('str').value;
+	 var dst=document.getElementById('dst').value;
+	 var pin=document.getElementById('pin').value;
+	 var phn=document.getElementById('phn').value;
+	 var obj={"lname":lname,"email":email,"door":door,"st":st,"dst":dst,"pin":pin,"phn":phn};
+	 console.log(obj);
+	 fetch("http://localhost:8080/Employee/webapi/controller/updateProfile", {
+		    body: JSON.stringify(obj),
+		    headers: {
+		        "Content-Type": "application/json",
+		        // "Content-Type": "multipart/form-data",
+		    },
+		    method: "PUT",
+		})
+	   .then((response)=>response.json())
+       .then((json)=>Profile(json))
+       .catch(err=>console.log('Request failed'));
+	    function Profile(res){
+		  if(res.value==="true")
+			 {
+			 alert("updated");
+		     window.location.href="http://localhost:8080/Employee/employeeProfile.html";
+			 }
+		  else{
+			  alert("Request Failed...Try again");
+		  }
+ } 
+} 
+</script>
+
+</body>
+
+</html>

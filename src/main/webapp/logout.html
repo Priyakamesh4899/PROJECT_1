@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8">
+        <title>logoutpage</title>
+    </head>
+<body>
+<script>
+fetch("http://localhost:8080/Employee/webapi/controller/logout")
+  .then(response => response.json())  // convert to json
+  .then(json => populateData(json))
+  .catch(err => console.log('Request Failed', err)); // Catch errors
+  function populateData(response) {
+      var d1=response;
+      if(d1.value==="true")
+	  {
+		  window.location.replace("http://localhost:8080/Employee/index.html");
+      }  
+	  else{
+		  alert("SERVER ERROR....");
+	  }
+   }
+</script>
+</body>
+</html>

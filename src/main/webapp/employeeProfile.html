@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8">
+        <title>EMPLOYEE HOMEPAGE</title>
+    </head>
+<body>
+    <header>
+        <div class="head">
+            <i class="fa-solid fa-house"></i>
+            <a class="nav-link" href="#">
+                <img src="logo.png" width="35px" height="40px">
+                </a>
+             <nav>
+                 <ul>
+                    <li><a href="employeePage.html">HOME</a></li>
+                     <li><a href="employeeProfile.html">PROFILE</a></li>
+                     <li><a href="embrusementRequest.html">EMBRUSEMENT REQUEST</a></li>
+                     <li><a href="logout.html">LOGOUT</a></li>
+                 </ul>
+             </nav>
+        </div>
+    </header>
+	<div id="profile"></div>
+	<script>
+              fetch('http://localhost:8080/Employee/webapi/controller/profile')
+              .then((response)=>response.json())
+              .then((json)=>displayProfile(json))
+              .catch(err=>console.log('Request failed'))
+               function displayProfile(response)
+                {
+                  var d1=response;
+                  var req=new Date(d1.dob).toLocaleDateString("en-US");
+                  output=`<center><br><br><br><div class="card" style="border:4px solid #660066">
+                  <div class="col">
+                  	  <img src="${d1.firstName.charAt(0).toLowerCase()}.png" alt="Avatar" width="25%" height="25%" style="border-radius:50%">
+                  	  <div class="container">
+                        <br><br><center><table width="100%" text-align="center">
+                            <thead>
+                             <tr>
+                              <th colspan="2" style="background-color:#33cc33;color:white;height:80px;border:4px solid #660066">PROFILE<br></th>
+                              </tr>  
+                              </thead><tbody>
+                              <tr>
+                                  <td>FIRST NAME:</td>
+                                  <td>${d1.firstName}</td></tr>
+                                  <td>LAST NAME:</td>
+                                  <td>${d1.lastName}</td></tr>
+                                  <td>DOB:</td>
+                                  <td>${req}</td></tr>
+                                  <td>AGE:</td>
+                                  <td>${d1.age}</td></tr>
+                                  <td>ADHAAR NO:</td>
+                                  <td>${d1.adhaarno}</td></tr>
+                                  <td>DESIGNATION:</td>
+                                  <td>${d1.designation}</td>
+                                  </tr>
+                                  <tr><td  colspan="2" style="background-color:#ff3377; color:white ;height:80px;border:4px solid #660066" ><center>ADDRESS DETAILS</center></td></tr>
+                                  <td>DOOR NO:</td>
+                                  <td>${d1.address.doornumber}</td></tr>
+                                  <td>STREET:</td>
+                                  <td>${d1.address.street}</td></tr>
+                                  <td>DISTRICT:</td>
+                                  <td>${d1.address.district}</td></tr>
+                                  <td>PINCODE:</td>
+                                  <td>${d1.address.pincode}</td></tr>
+                                  <tr><td  colspan="2" style="background-color:#e600e6;color:white;height:80px;border:4px solid #660066"><center>CONTACT DETAILS</center></td></tr>
+                                  <td>CONTACT NO:</td>
+                                  <td>${d1.contactno}</td>
+                                  </tr>
+                                  <td>EMAIL ID:</td>
+                                  <td>${d1.emailid}</td>
+                                  </tr>
+                                  <tr>
+                                  <td></td>
+                                  <td><button type="button" name="update" class="but" onclick="update()">UPDATE_PROFILE</button>
+                                  <button type="button" name="changePassword" class="but" onclick="change()">CHANGE_PASSWORD</button</td>
+                                  </tr></tbody></table></center>    	     
+                            	  </div>
+                            	</div></div></center>`;
+            	   
+            	    output+=`</div>`;
+                  document.getElementById("profile").innerHTML=output;
+                     
+                  
+              }
+              function update(){
+            	  window.location.href="http://localhost:8080/Employee/profileUpdate.html";	   
+              }
+              function change(){
+            	  window.location.href="http://localhost:8080/Employee/changePassword.html";
+              }
+              
+              
+</script>
+</body>
+</html>

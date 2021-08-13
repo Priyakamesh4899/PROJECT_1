@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+ <head>
+        <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8">
+        <title>MANAGER HOMEPAGE</title>
+    </head>
+<body>
+    <header>
+        <div class="head">
+            <i class="fa-solid fa-house"></i>
+            <img src="logo.png" alt="logo" class="logo" width="30" height="30">
+             <nav>
+                 <ul>
+                    <li><a href="managerPage.html">HOME</a></li>
+                     <li><a href="managerProfile.html">PROFILE</a></li>
+                     <li><a href="managerEmbrusement.html">EMBRUSEMENT REQUESTS</a></li>
+                     <li><a href="viewEmployees.html">EMPLOYEES PROFILE</a></li>
+                     <li><a href="RegisterEmployee.html">REGISTER AN EMPLOYEE</a></li>
+                     <li><a href="logout.html">LOGOUT</a></li>
+                 </ul>
+             </nav>
+            </div>
+            
+    </header>
+  <div class="wrapper">
+    <div class="sidebar">
+        <h2>MENU BAR</h2>
+       <ul>
+            <li><a href="EmployeesRequest.html"><i class="fas fa-user"></i>EMPLOYEE REQUEST</a></li>
+            <li><a href="viewPendings.html"><i class="fas fa-address-card"></i>VIEW PENDINGS</a></li>
+            <li><a href="viewResolved.html"><i class="fas fa-project-diagram"></i>VIEW RESOLVED</a></li>
+             <li><a href="viewRejected.html"><i class="fas fa-lock"></i>VIEW REJECTED</a></li>        
+        </ul>
+    </div>
+    </div>
+    <div id="rejected"></div>
+<script>
+              fetch('http://localhost:8080/Employee/webapi/controller/AllRejected')
+              .then((response)=>response.json())
+              .then((json)=>displayProfile(json))
+              .catch(err=>console.log('Request failed'));
+              function displayProfile(response)
+              {
+                  
+                  var data1=response;
+                  let output='';
+                  output=`<br><br><center><table id="pendings" style="column-gap:40px; width:30%">
+                            <thead>
+                             <tr>
+                              <th scope="col">FIRST NAME</th>
+                              <th scope="col">LAST NAME</th>
+                              <th scope="col">START DATE</th>
+                              <th scope="col">END DATE</th>
+                              <th scope="col">REQUEST DATE</th>
+                              <th scope="col">AMOUNT</th>
+                              <th scope="col">REQUEST TYPE</th>
+                              <th scope="col">STATUS</th>
+                              <th scope="col">DESCRIPTION</th>
+                              <th scope="col">EMPLOYEE ID</th>
+                              </tr>  
+                          </thead>
+                          <tbody>`;
+                          for(var d1 of data1)
+                         {
+                          var req=new Date(d1.reqDate).toLocaleDateString("en-US");
+                          let des='';
+                          des=d1.description;
+                          let re='';
+                          re=d1.reqType;
+                          output+=`
+                              <tr scope="row">
+                                  <td>${d1.eFname}</td>
+                                  <td>${d1.eLname}</td>
+                                  <td>${d1.startDate}</td>
+                                  <td>${d1.endDate}</td>
+                                  <td>${req}</td>
+                                  <td>${d1.amount}</td>
+                                  <td>${re}</td>
+                                  <td>${d1.status}</td>
+                                  <td>${des}</td>
+                                  <td>${d1.eid}</td>
+                              </tr>`;
+                         }
+                  output+=`</tbody></table></center>`;
+                  document.getElementById("rejected").innerHTML=output;
+              }
+           </script>
+
+</body>
+</html>

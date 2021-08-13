@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8">
+        <title>EMPLOYEE HOMEPAGE</title>
+    </head>
+<body>
+    <header>
+        <div class="head">
+            <i class="fa-solid fa-house"></i>
+            <a class="nav-link" href="#">
+                <img src="logo.png" width="35px" height="40px">
+                </a>
+             <nav>
+                 <ul>
+                    <li><a href="employeePage.html">HOME</a></li>
+                     <li><a href="employeeProfile.html">PROFILE</a></li>
+                     <li><a href="embrusementRequest.html">EMBRUSEMENT REQUEST</a></li>
+                     <li><a href="logout.html">LOGOUT</a></li>
+                 </ul>
+             </nav>
+        </div>
+    </header>
+	<div class="wrapper">
+    <div class="sidebar">
+        <h2>MENU BAR</h2>
+       <ul>
+            <li><a href="SubmitERS.html"><i class="fas fa-user"></i>SUBMIT ERS</a></li>
+            <li><a href="PendingERS.html"><i class="fas fa-address-card"></i>VIEW PENDINGS</a></li>
+            <li><a href="ResolvedERS.html"><i class="fas fa-project-diagram"></i>VIEW RESOLVED</a></li>
+           <li><a href="RejectedERS.html"><i class="fas fa-lock"></i>VIEW REJECTED</a></li>
+       
+        </ul>
+    </div>
+    </div>
+    <div class="modal-login">
+    <div class="avatar">
+    <br>
+    <center><img src="submt.png" alter="image" class="new" width="530" height="150" style="padding-top:0px;border: 5px solid #009999"></center>
+	</div>
+	<center>
+	  <table style="width:35%;height:100%;border: 5px solid #009999;padding-top:0px" >
+    <thead>
+    <th colspan="2" style="background-color:#ff9900;color:white;height:80px;border:3px solid #b300b3" ><h2>REIMBRUSEMENT RESQUEST</h2></th>
+    </thead>
+    <tbody>
+	      <form name="ers">
+		  <tr>
+		  <td><label>REQUEST TYPE : </label></td>
+			
+			<td><label class="radio-inline">
+				  <input type="radio" name="optradio" value="Food" id="a" >FOOD 
+				  </label>
+				  
+				  <label class="radio-inline">
+				  <input type="radio" name="optradio" value="Travel" id="b">TRAVEL
+				  </label>
+				  <label class="radio-inline">
+				  <input type="radio" name="optradio" value="Seminar" id="c">SEMINAR
+				  </label>
+				  <label class="radio-inline">
+				  <input type="radio" name="optradio" value="Purchase" id="d">PURCHASE
+				  </label>
+				  <label class="radio-inline">
+				  <input type="radio" name="optradio" value="Medical" id="e">MEDICAL
+				  </label>
+          </td>
+		  </tr>
+		  <tr>
+		  <td><label>DESCRIPTION:</label></td>
+			<td><textarea class="textb" name="Des" placeholder="Provide description of the request" maxlength="1000" value="description" id="des"></textarea></td>
+		  </tr>
+		  <tr>
+		  <td colspan="2"  style="background-color:#ff9900;color:white;height:40px;border:3px solid #b300b3"><label><center><h3>DURATION :</h3></center></label></td>
+		  </tr>
+		  <tr>
+		  <tr>
+		  <td><label>START DATE:</label></td>
+			<td><input type="date" name="sdate" value="startDate" id="sd" ></td>
+		  </tr>
+		  <tr>
+		  <td><label>END DATE:</label></td>
+			<td><input type="date" name="edate" value="endDate" id="ed" ></td>
+		  </tr>
+		  <tr>
+		  <td><label>AMOUNT:</label></td>
+			<td><input type="number" name="amount" value="amount" placeholder="0000.00" id="at"></td>
+		  </tr>
+		  </center>	  
+	</tbody>
+	</table>
+	
+	</div>
+	<br><br>
+	<center> <button class="but" type="button" name="submit"  onclick="send()">SUBMIT REQUEST</button></center>
+	<script>
+function send(){
+	 var sDate=document.getElementById('sd').value;
+	 var eDate=document.getElementById('ed').value;
+	 var at=document.getElementById('at').value;
+	 var para=document.getElementById('des').value;
+	 var rt=document.ers.optradio.value;
+	 var obj={"rt":rt,"para":para,"sDate":sDate,"eDate":eDate,"at":at};
+	 console.log(obj);
+	 fetch("http://localhost:8080/Employee/webapi/controller/add", {
+		    body: JSON.stringify(obj),
+		    headers: {
+		        "Content-Type": "application/json",
+		        // "Content-Type": "multipart/form-data",
+		    },
+		    method: "POST",
+		})
+	  .then((response)=>response.json())
+      .then((json)=>displayProfile(json))
+      .catch(err=>console.log('Request failed'));
+	  function displayProfile(res){
+		  if(res.sts===1)
+			 {
+			  alert("success");
+		     window.location.href="http://localhost:8080/Employee/embrusementRequest.html";
+			 }
+		  else{
+			  alert("Request Failed...Try again");
+		  }
+ } 
+} 
+</script>
+</body>
+
+</html>

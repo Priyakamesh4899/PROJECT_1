@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+  <video autoplay muted loop id="myVideo">
+  <source src="bg1.mp4" type="video/mp4">
+</video>
+  <div class="first">
+    <form id="fm"  >
+    <div class="login">
+    <h1>Login</h1>
+    <div class="textbox">
+    <i class="fas fa-user"></i>
+    <input type="number" name="userId" placeholder="UserId" id="ui">
+    </div>
+    <div class="textbox">
+    <i class="fas fa-lock"></i>
+    <input type="password" name="pswd" placeholder="Password" id="pd">
+    </div >
+   <button type="button" class="button" value="Submit" id="btn3" onclick="fth()">SUBMIT</button>
+   </div>
+  </form>
+  </div>
+  <script>
+ function fth(){ 
+	 
+	// You need to use standard javascript object here
+	 var id=document.getElementById('ui').value;
+	 var psd=document.getElementById('pd').value;
+	 var obj={"uid":id,"pwd":psd};
+	 console.log(obj);
+	 fetch("http://localhost:8080/Employee/webapi/controller/login", {
+		    body: JSON.stringify(obj),
+		    headers: {
+		        "Content-Type": "application/json",
+		        // "Content-Type": "multipart/form-data",
+		    },
+		    method: "POST",
+		})
+	  .then((response)=>response.json())
+      .then((json)=>displayProfile(json))
+      .catch(err=>console.log('Request failed'));
+	  function displayProfile(res){
+		   console.log("hi");
+			if(res.value==="true"){
+				if(res.des==="manager" || res.des==="Manager"){
+					window.location.href="http://localhost:8080/Employee/managerPage.html";
+				}
+				else{
+					window.location.href="http://localhost:8080/Employee/employeePage.html"; 
+				}
+			}
+    		else{
+			alert("Incorrect password");
+		} 
+ }
+ }
+</script>
+</body>
+</html>

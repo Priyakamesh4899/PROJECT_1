@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+ <head>
+        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8">
+        <title>MANAGER HOMEPAGE</title>
+    </head>
+<body>
+    <header>
+        <div class="head">
+           
+            <img src="logo.png" alt="logo" class="logo" width="30" height="30">
+             <nav>
+                 <ul>
+                    <li><a href="managerPage.html">HOME</a></li>
+                     <li><a href="managerProfile.html">PROFILE</a></li>
+                     <li><a href="managerEmbrusement.html">EMBRUSEMENT REQUESTS</a></li>
+                     <li><a href="viewEmployees.html">EMPLOYEES PROFILE</a></li>
+                     <li><a href="RegisterEmployee.html">REGISTER AN EMPLOYEE</a></li>
+                     <li><a href="logout.html">LOGOUT</a></li>
+                 </ul>
+             </nav>
+            </div>
+    </header>
+    <center>
+    
+    <form name="reg" >
+    <center><div id="hi"></div></center>
+    <div class="textbox" id="tb">
+    <br>
+    <br>
+    <br>
+    <table style="border:10px solid #009999; width:60%">
+    <thead>
+    <tr>
+    <th colspan="2" style="background-color :#1aff66;color:white;height:100px;border:3px solid #33cccc"><center><h2>REGISTER AN EMPLOYEE</h2></center></th>
+     </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td><label>EMPLOYEE FIRST NAME:</label></td>
+    <td><input type="text" name="efname" id="efname" placeholder="Employee first name" size="40" required/></td>
+    </tr>
+    <tr>
+    <td><label>EMPLOYEE LAST NAME:</label></td>
+    <td><input type="text" name="elname" id="elname" placeholder="Employee last name" required/></td>
+    </tr>
+    <tr>
+    <td><label>EMPLOYEE DOB:</label></td>
+    <td><input type="date" name="dob" id="dob" placeholder="Employee dob" style="color:#009999"required/></td>
+    </tr>
+    <tr>
+    <td><label>EMPLOYEE AGE:</label></td>
+    <td><input type="number" name="age" id="age" placeholder="Employee age" required/></td>
+    </tr>
+    <tr>
+    <td><label>EMPLOYEE ADHAAR NO:</label></td>
+    <td><input type="text" name="adhaar" id="adhaar" placeholder="Employee adhaar no" required/></td>
+    </tr>
+    <tr>
+    <td><label>EMPLOYEE DESIGNATION:</label></td>
+    <td><input type="text" name="des" id="des" placeholder="Employee Designation" required/></td>
+    </tr>
+    <tr>
+    <td colspan="2" style="background-color:#ffbb33;color:white;height:75px;border:3px solid #33cccc"><center><label><h2>ADDRESS</h2></label></center></td>
+    </tr>
+    <tr>
+    <td><label>DOOR NO:</label></td>
+    <td><input type="text" name="doorno" id="dn" placeholder="Door no" required/></td>
+    </tr>
+    <tr>
+    <td><label>STREET:</label></td>
+    <td><input type="text" name="street" id="st" placeholder="Street Name" required/></td>
+    </tr>
+    <tr>
+    <td><label>DISTRICT:</label></td>
+    <td><input type="text" name="dis" id="dis" placeholder="District Name" required/></td>
+    </tr>
+     <tr>
+    <td><label>PINCODE:</label></td>
+    <td><input type="number" name="pin" id="pin" placeholder="Pincode" required/></td>
+    </tr>
+    <tr>
+     <td colspan="2" style="background-color: #9966ff;color:white;height:75px;border:3px solid #33cccc"><center><label><h2>CONTACT DETAILS</h2></label></center></td>
+    </tr>
+    <tr>
+    <td><label>EMPLOYEE CONTACT NO:</label></td>
+    <td><input type="number" name="cn" id="cn" placeholder="Employee Contact No" required/></td>
+    </tr>
+    <tr>
+    <td><label>EMPLOYEE EMAIL ID :</label></td>
+    <td><input type="email" name="email" id="email" placeholder="Employee email id" required/></td>
+    </tr>
+    
+    <tr>
+        <td colspan="2"><center><button type="button" name="register" class="but" onclick="re()">REGISTER EMPLOYEE</button></center></td>
+        </tr>
+    </tbody>
+    </table>
+    </div>
+    </form>
+    </center>
+    <script>
+    function re(){
+    	var fn=document.reg.efname.value;
+    	var ln=document.reg.elname.value;
+    	var dob=document.reg.dob.value;
+    	var age=document.reg.age.value;
+    	var ad=document.reg.adhaar.value;
+    	var em=document.reg.email.value;
+    	var dn=document.reg.doorno.value;
+    	var st=document.reg.street.value;
+    	var dis=document.reg.dis.value;
+    	var pin=document.reg.pin.value;
+    	var cn=document.reg.cn.value;
+    	var des=document.reg.des.value;
+    	
+    	var obj={"firstName":fn,"lastName":ln,"dob":dob,"age":age,"adhaarno":ad,"emailid":em, "address":{"doornumber":dn,"street":st,"district":dis,"pincode":pin},
+    			"contactno":cn,"designation":des}
+    	console.log(obj);
+    	fetch("http://localhost:8080/Employee/webapi/controller/addEmployee", {
+		    body: JSON.stringify(obj),
+		    headers: {
+		        "Content-Type": "application/json",
+		        // "Content-Type": "multipart/form-data",
+		    },
+		    method: "POST",
+		})
+	  .then((response)=>response.json())
+      .then((json)=>displayProfile(json))
+      .catch(err=>console.log('Request failed'));
+	  function displayProfile(res){
+		   console.log("hi");
+			if(res.sts==1){
+				alert("RESIGTERED SUCCESSFULLY..!!!");
+				window.location.href="RegisterEmployee.html";
+			}
+    		else{
+			   alert("SERVER ERROR...TRY AGAIN");
+		  } 
+     }
+    	
+    }
+    
+    
+    
+    </script>
+    
+    
+   </body> 
+</html>
